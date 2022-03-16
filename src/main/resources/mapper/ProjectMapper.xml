@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tostart.dao.ProjectMapper">
+  <resultMap id="BaseResultMap" type="com.tostart.bean.Project">
+    <id column="project_id" jdbcType="INTEGER" property="projectId" />
+    <id column="project_user_id" jdbcType="INTEGER" property="projectUserId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_tag" jdbcType="VARCHAR" property="projectTag" />
+    <result column="project_content" jdbcType="VARCHAR" property="projectContent" />
+    <result column="project_status" jdbcType="VARCHAR" property="projectStatus" />
+    <result column="project_creat_time" jdbcType="TIMESTAMP" property="projectCreatTime" />
+    <result column="project_start_time" jdbcType="TIMESTAMP" property="projectStartTime" />
+    <result column="project_end_time" jdbcType="TIMESTAMP" property="projectEndTime" />
+    <result column="project_img" jdbcType="VARCHAR" property="projectImg" />
+    <result column="project_goal" jdbcType="INTEGER" property="projectGoal" />
+    <result column="project_progress" jdbcType="INTEGER" property="projectProgress" />
+    <result column="project_support" jdbcType="INTEGER" property="projectSupport" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    project_id, project_user_id, project_name, project_tag, project_content, project_status, 
+    project_creat_time, project_start_time, project_end_time, project_img, project_goal, 
+    project_progress, project_support
+  </sql>
+  <select id="selectByExample" parameterType="com.tostart.bean.ProjectExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from project
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.tostart.bean.ProjectKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from project
+    where project_id = #{projectId,jdbcType=INTEGER}
+      and project_user_id = #{projectUserId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.tostart.bean.ProjectKey">
+    delete from project
+    where project_id = #{projectId,jdbcType=INTEGER}
+      and project_user_id = #{projectUserId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tostart.bean.ProjectExample">
+    delete from project
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tostart.bean.Project">
+    insert into project (project_id, project_user_id, project_name, 
+      project_tag, project_content, project_status, 
+      project_creat_time, project_start_time, 
+      project_end_time, project_img, project_goal, 
+      project_progress, project_support)
+    values (#{projectId,jdbcType=INTEGER}, #{projectUserId,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, 
+      #{projectTag,jdbcType=VARCHAR}, #{projectContent,jdbcType=VARCHAR}, #{projectStatus,jdbcType=VARCHAR}, 
+      #{projectCreatTime,jdbcType=TIMESTAMP}, #{projectStartTime,jdbcType=TIMESTAMP}, 
+      #{projectEndTime,jdbcType=TIMESTAMP}, #{projectImg,jdbcType=VARCHAR}, #{projectGoal,jdbcType=INTEGER}, 
+      #{projectProgress,jdbcType=INTEGER}, #{projectSupport,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tostart.bean.Project">
+    insert into project
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="projectUserId != null">
+        project_user_id,
+      </if>
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="projectTag != null">
+        project_tag,
+      </if>
+      <if test="projectContent != null">
+        project_content,
+      </if>
+      <if test="projectStatus != null">
+        project_status,
+      </if>
+      <if test="projectCreatTime != null">
+        project_creat_time,
+      </if>
+      <if test="projectStartTime != null">
+        project_start_time,
+      </if>
+      <if test="projectEndTime != null">
+        project_end_time,
+      </if>
+      <if test="projectImg != null">
+        project_img,
+      </if>
+      <if test="projectGoal != null">
+        project_goal,
+      </if>
+      <if test="projectProgress != null">
+        project_progress,
+      </if>
+      <if test="projectSupport != null">
+        project_support,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="projectUserId != null">
+        #{projectUserId,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectTag != null">
+        #{projectTag,jdbcType=VARCHAR},
+      </if>
+      <if test="projectContent != null">
+        #{projectContent,jdbcType=VARCHAR},
+      </if>
+      <if test="projectStatus != null">
+        #{projectStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCreatTime != null">
+        #{projectCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectStartTime != null">
+        #{projectStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectEndTime != null">
+        #{projectEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectImg != null">
+        #{projectImg,jdbcType=VARCHAR},
+      </if>
+      <if test="projectGoal != null">
+        #{projectGoal,jdbcType=INTEGER},
+      </if>
+      <if test="projectProgress != null">
+        #{projectProgress,jdbcType=INTEGER},
+      </if>
+      <if test="projectSupport != null">
+        #{projectSupport,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tostart.bean.ProjectExample" resultType="java.lang.Long">
+    select count(*) from project
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update project
+    <set>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectUserId != null">
+        project_user_id = #{record.projectUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectName != null">
+        project_name = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectTag != null">
+        project_tag = #{record.projectTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectContent != null">
+        project_content = #{record.projectContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectStatus != null">
+        project_status = #{record.projectStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectCreatTime != null">
+        project_creat_time = #{record.projectCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.projectStartTime != null">
+        project_start_time = #{record.projectStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.projectEndTime != null">
+        project_end_time = #{record.projectEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.projectImg != null">
+        project_img = #{record.projectImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectGoal != null">
+        project_goal = #{record.projectGoal,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectProgress != null">
+        project_progress = #{record.projectProgress,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectSupport != null">
+        project_support = #{record.projectSupport,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update project
+    set project_id = #{record.projectId,jdbcType=INTEGER},
+      project_user_id = #{record.projectUserId,jdbcType=INTEGER},
+      project_name = #{record.projectName,jdbcType=VARCHAR},
+      project_tag = #{record.projectTag,jdbcType=VARCHAR},
+      project_content = #{record.projectContent,jdbcType=VARCHAR},
+      project_status = #{record.projectStatus,jdbcType=VARCHAR},
+      project_creat_time = #{record.projectCreatTime,jdbcType=TIMESTAMP},
+      project_start_time = #{record.projectStartTime,jdbcType=TIMESTAMP},
+      project_end_time = #{record.projectEndTime,jdbcType=TIMESTAMP},
+      project_img = #{record.projectImg,jdbcType=VARCHAR},
+      project_goal = #{record.projectGoal,jdbcType=INTEGER},
+      project_progress = #{record.projectProgress,jdbcType=INTEGER},
+      project_support = #{record.projectSupport,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tostart.bean.Project">
+    update project
+    <set>
+      <if test="projectName != null">
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectTag != null">
+        project_tag = #{projectTag,jdbcType=VARCHAR},
+      </if>
+      <if test="projectContent != null">
+        project_content = #{projectContent,jdbcType=VARCHAR},
+      </if>
+      <if test="projectStatus != null">
+        project_status = #{projectStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCreatTime != null">
+        project_creat_time = #{projectCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectStartTime != null">
+        project_start_time = #{projectStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectEndTime != null">
+        project_end_time = #{projectEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectImg != null">
+        project_img = #{projectImg,jdbcType=VARCHAR},
+      </if>
+      <if test="projectGoal != null">
+        project_goal = #{projectGoal,jdbcType=INTEGER},
+      </if>
+      <if test="projectProgress != null">
+        project_progress = #{projectProgress,jdbcType=INTEGER},
+      </if>
+      <if test="projectSupport != null">
+        project_support = #{projectSupport,jdbcType=INTEGER},
+      </if>
+    </set>
+    where project_id = #{projectId,jdbcType=INTEGER}
+      and project_user_id = #{projectUserId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tostart.bean.Project">
+    update project
+    set project_name = #{projectName,jdbcType=VARCHAR},
+      project_tag = #{projectTag,jdbcType=VARCHAR},
+      project_content = #{projectContent,jdbcType=VARCHAR},
+      project_status = #{projectStatus,jdbcType=VARCHAR},
+      project_creat_time = #{projectCreatTime,jdbcType=TIMESTAMP},
+      project_start_time = #{projectStartTime,jdbcType=TIMESTAMP},
+      project_end_time = #{projectEndTime,jdbcType=TIMESTAMP},
+      project_img = #{projectImg,jdbcType=VARCHAR},
+      project_goal = #{projectGoal,jdbcType=INTEGER},
+      project_progress = #{projectProgress,jdbcType=INTEGER},
+      project_support = #{projectSupport,jdbcType=INTEGER}
+    where project_id = #{projectId,jdbcType=INTEGER}
+      and project_user_id = #{projectUserId,jdbcType=INTEGER}
+  </update>
+</mapper>
